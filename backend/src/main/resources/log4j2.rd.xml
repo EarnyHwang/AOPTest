@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Properties>
+        <Property name="basePath">/var/log/ai_chat</Property>
+        <property name="LOG_ENCODING" value="UTF-8"/>
+        <property name="FILE_LOG_PATTERN"
+                  value="[%d{yyyy-MM-dd HH:mm:ss.SSS}][%-5level][%thread][${sys:PRIVATE_IP}][%logger{36}][%L][%X{correlationId}] %msg%n"/>
+        <property name="LOG_PATTERN_ORIGIN" value="%d{HH:mm:ss,SSS}  [%t] %-5p %c{36} [%L] - %m%n"/>
+        <property name="LOG_PATTERN_ME"
+                  value="[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%t] %highlight{${LOG_LEVEL_PATTERN:-%5p}}{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=yellow, DEBUG=green bold, TRACE=blue}   %style{%c{36}}{cyan} [%L] - %m%n ${LOG_EXCEPTION_CONVERSION_WORD:-%wEx} "/>
+        <property name="LOG_PATTERN"
+                  value="%style{%d{DEFAULT}}{cyan} %highlight{${LOG_LEVEL_PATTERN:-%5p}}{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=yellow, DEBUG=green bold, TRACE=blue} %style{%-40.40c{1.1}}{cyan} L%L %style{:}{red} thread_id=%tid thread_name=%tn thread_priority=%tp %m%n ${LOG_EXCEPTION_CONVERSION_WORD:-%wEx} "/>
+
+    </Properties>
+    <Appenders>
+        <Console name="ConsoleAppender" target="SYSTEM_OUT">
+            <PatternLayout pattern="${LOG_PATTERN}" disableAnsi="false"/>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <Root level="INFO">
+            <appender-ref ref="ConsoleAppender"/>
+        </Root>
+        <Logger name="org.springframework" level="ERROR" additivity="false">
+            <Appender-ref ref="ConsoleAppender"/>
+        </Logger>
+        <Logger name="com.wistron" level="TRACE" additivity="false">
+            <Appender-ref ref="ConsoleAppender"/>
+        </Logger>
+        <Logger name="reactor" level="TRACE" additivity="false">
+          <Appender-ref ref="ConsoleAppender"/>
+        </Logger>
+    </Loggers>
+</Configuration>

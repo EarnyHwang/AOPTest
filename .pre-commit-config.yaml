@@ -1,0 +1,25 @@
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v2.3.0
+  hooks:
+  -   id: check-yaml
+  -   id: end-of-file-fixer
+  -   id: trailing-whitespace
+- repo: local
+  hooks:
+    -   id: gradle-check
+        name: gradle check
+        description: Runs java lint using gradle check
+        entry: pre-commit-hook/gradle-check.sh
+        language: script
+        # verbose: true
+        pass_filenames: false
+        files: ^backend/
+    -   id: eslint
+        name: eslint
+        description: Runs java lint using gradle check
+        entry: pre-commit-hook/eslint.sh
+        language: script
+        pass_filenames: false
+        verbose: true
+        files: ^frontend/
