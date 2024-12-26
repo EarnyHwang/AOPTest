@@ -109,6 +109,8 @@ dependencies {
   // https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml
   implementation 'org.apache.poi:poi-ooxml:5.2.4'
 
+  // Enable @Configurable aspect to inject Spring beans into non-managed objects
+  aspect 'org.springframework:spring-aspects'
 }
 
 ext {
