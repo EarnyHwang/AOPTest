@@ -9,9 +9,11 @@ import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 
 @Aspect
 @Log4j2
+@Configurable  // Inject Spring beans into non-managed objects
 public class MonitorMethodAspect {
 
   @Autowired MonitorService monitorService;
@@ -27,6 +29,8 @@ public class MonitorMethodAspect {
       returning = "result")
   public void afterReturn1(JoinPoint joinPoint, MonitorOnce monitor, int a, int b, String result) {
     log.info("afterReturn1 joinPoint： " + joinPoint + " result：" + result);
+    if (monitorService == null)
+      throw new RuntimeException("@Autowired MonitorService is not working unexpectedly");
   }
 
   @AfterReturning(
@@ -34,5 +38,7 @@ public class MonitorMethodAspect {
       returning = "result")
   public void afterReturn2(JoinPoint joinPoint, MonitorTwice monitor, int a, int b, String result) {
     log.info("afterReturn2 joinPoint： " + joinPoint + " result：" + result);
+    if (monitorService == null)
+      throw new RuntimeException("@Autowired MonitorService is not working unexpectedly");
   }
 }
